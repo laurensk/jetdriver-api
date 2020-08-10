@@ -2,10 +2,11 @@
   "name": "jetdriver-api",
   "version": "1.0.0",
   "description": "",
-  "main": "src/app.ts",
+  "main": "src/app.js",
   "scripts": {
-    "start": "nodemon src/app.ts"
+    "start": "nodemon src/app.js"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
