@@ -1,3 +1,5 @@
+'use strict';
+
 const cars = require('./routes/cars');
 const companions = require('./routes/companions');
 const entries = require('./routes/entries');
