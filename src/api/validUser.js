@@ -1,9 +1,11 @@
 'use strict';
 
+const sendError = require("./sendError");
+
 module.exports = function validUser(req, res, next) {
-    if (true) {
+    if (false) {
         next();
     } else {
-        res.send(403);
+        sendError(res, 403, 'unauthorized');
     }
 }
