@@ -12,4 +12,4 @@ router.use('/entries', entries);
 router.use('/properties', properties);
 router.use('/user', user);
 
-export default router;
+module.exports = router;

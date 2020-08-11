@@ -5,4 +5,4 @@ router.route('/')
         res.send(req.originalUrl);
     });
 
-export default router;
+module.exports = router;
