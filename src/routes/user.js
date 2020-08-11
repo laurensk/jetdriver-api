@@ -1,8 +1,9 @@
 'use strict';
 
+const validUser = require('../api/validUser');
 const router = require('express').Router();
 
-router.route('/').get((req, res) => {
+router.route('/').get(validUser, (req, res) => {
     res.send('user');
 });
 
