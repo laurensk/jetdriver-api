@@ -1,9 +1,9 @@
 'use strict';
 
-const validUser = require('../api/validUser');
+const verifyToken = require('../api/verifyToken');
 const router = require('express').Router();
 
-router.route('/').get(validUser, (req, res) => {
+router.route('/').get(verifyToken, (req, res) => {
     res.send('user');
 });
 
