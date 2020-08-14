@@ -28,11 +28,12 @@ router.route('/sign-up').post((req, res) => {
     const { error } = validation.validate(req.body);
     if (error) return sendError(res, 400, "error");
 
-    if (validatePassword(req.body.password)) {
-        createUser(req.body.email, req.body.password); // async function with callback
-    } else {
-        return sendError(res, 400, "error");
-    }
+    if (validatePassword(req.body.password)) return sendError(res, 400, "error");
+
+    createUser(req.body.email, req.body.password, (error, user) => {
+        if (error) return sendError(res, 400, "error");
+        res.json(user);
+    });
 
 });
 
