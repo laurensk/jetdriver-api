@@ -1,8 +1,8 @@
 'use strict';
 
-const sendError = require("./sendError");
+const sendError = require("../helpers/sendError");
 const mysql = require('mysql');
-const sql = require("../db");
+const sql = require("../../db");
 
 
 module.exports = function verifyToken(req, res, next) {

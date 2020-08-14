@@ -1,6 +1,6 @@
 'use strict';
 
-const verifyToken = require('../api/verifyToken');
+const verifyToken = require('../api/user/verifyToken');
 const router = require('express').Router();
 
 router.route('/').get(verifyToken, (req, res) => {
