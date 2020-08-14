@@ -17,12 +17,12 @@ module.exports = function verifyToken(req, res, next) {
         sql.query('SELECT * FROM JDTokens WHERE tokToken = ' + mysql.escape(bearerToken) + ' AND tokValid = TRUE', function (err, rows, fields) {
             if (err) throw err;
             if (rows.length === 1) {
+                console.log('User authenticated');
                 next();
             } else {
                 sendError(res, 403, 'unauthorized');
             }
         });
-
     } else {
         sendError(res, 403, 'unauthorized');
     }
