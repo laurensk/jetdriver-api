@@ -4,7 +4,6 @@ const sendError = require("../helpers/sendError");
 const mysql = require('mysql');
 const sql = require("../../db");
 
-
 module.exports = function verifyToken(req, res, next) {
 
     const bearerHeader = req.headers['authorization'];
