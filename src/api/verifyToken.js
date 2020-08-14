@@ -14,7 +14,8 @@ module.exports = function verifyToken(req, res, next) {
         const bearerToken = bearer[1];
         req.token = bearerToken;
 
-        sql().query('SELECT * FROM JDTokens WHERE tokToken = ' + mysql.escape(bearerToken) + ' AND tokValid = TRUE', function (err, rows, fields) {
+        sql.query('SELECT * FROM JDTokens WHERE tokToken = ' + mysql.escape(bearerToken) + ' AND tokValid = TRUE', function (err, rows, fields) {
+            console.log(rows);
             if (err) throw err;
             if (rows.length === 1) {
                 console.log('User authenticated');
