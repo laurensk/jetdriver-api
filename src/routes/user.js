@@ -2,13 +2,13 @@
 
 const Joi = require('@hapi/joi');
 const router = require('express').Router();
+const { sendError, Error } = require('../api/helpers/errorHandling');
 
 const verifyToken = require('../api/user/verifyToken');
 
 const getUser = require('../api/user/getUser');
 const loginUser = require('../api/user/loginUser');
 const createUser = require('../api/user/createUser');
-const sendError = require('../api/helpers/sendError');
 const validatePassword = require('../api/helpers/validatePassword');
 
 router.route('/').get(verifyToken, (req, res) => {
@@ -26,12 +26,12 @@ router.route('/sign-up').post((req, res) => {
         password: Joi.string().required()
     });
     const { error } = validation.validate(req.body);
-    if (error) return sendError(res, 400, "error");
+    if (error) return sendError(res, Error.unauthenticated);
 
-    if (validatePassword(req.body.password)) return sendError(res, 400, "error");
+    if (validatePassword(req.body.password)) return sendError(res, Error.unauthenticated);
 
     createUser(req.body.email, req.body.password, (error, user) => {
-        if (error) return sendError(res, 400, "error");
+        if (error) return sendError(res, Error.unauthenticated);
         res.json(user);
     });
 

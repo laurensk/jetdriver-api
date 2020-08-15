@@ -1,6 +1,6 @@
 'use strict';
 
-const sendError = require("../helpers/sendError");
+const sendError = require("../helpers/errorHandling");
 const mysql = require('mysql');
 const sql = require("../../db");
 
