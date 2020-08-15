@@ -31,7 +31,7 @@ router.route('/sign-up').post((req, res) => {
     if (validatePassword(req.body.password)) return sendError(res, Error.unauthenticated);
 
     createUser(req.body.email, req.body.password, (error, user) => {
-        if (error) return sendError(res, Error.unknownError);
+        if (error) return sendError(res, error);
         res.json(user);
     });
 
