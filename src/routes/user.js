@@ -26,13 +26,15 @@ router.route('/sign-up').post((req, res) => {
         password: Joi.string().required()
     });
     const { error } = validation.validate(req.body);
-    if (error) return sendError(res, Error.unauthenticated);
+    if (error) return sendError(res, Error.validationError);
 
-    if (validatePassword(req.body.password)) return sendError(res, Error.unauthenticated);
+    if (validatePassword(req.body.password)) return sendError(res, Error.validationError);
 
     createUser(req.body.email, req.body.password, (error, user) => {
         if (error) return sendError(res, error);
-        res.json(user);
+        res.json({
+            user: user
+        });
     });
 
 });
