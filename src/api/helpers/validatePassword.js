@@ -9,7 +9,7 @@ module.exports = function validatePassword(password) {
         .is().max(100)
         .has().uppercase()
         .has().lowercase()
-        .has().digits(2)
+        .has().digits(1)
         .has().not().spaces();
 
     return schema.validate(password);
