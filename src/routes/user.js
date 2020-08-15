@@ -28,7 +28,7 @@ router.route('/sign-up').post((req, res) => {
     const { error } = validation.validate(req.body);
     if (error) return sendError(res, Error.validationError);
 
-    if (validatePassword(req.body.password)) return sendError(res, Error.validationError);
+    if (!validatePassword(req.body.password)) return sendError(res, Error.validationError);
 
     createUser(req.body.email, req.body.password, (error, user) => {
         if (error) return sendError(res, error);

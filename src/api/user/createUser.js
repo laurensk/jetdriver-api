@@ -19,8 +19,8 @@ module.exports = function createUser(email, password, callback) {
             if (err) return callback(Error.unknownError, null);
             sql.query('SELECT * FROM JDUsers WHERE useEmail = ?', [email], (err, rows) => {
                 const dbUser = rows[0];
-                const user = new User({ uuid: dbUser.useId, email: dbUser.useEmail })
-                callback(user, null);
+                const user = new User(dbUser.useId, dbUser.useEmail);
+                callback(null, user);
             })
         });
 

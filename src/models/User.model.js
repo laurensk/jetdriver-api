@@ -14,3 +14,5 @@ class User {
         this.salt = salt;
     }
 }
+
+module.exports = User;
