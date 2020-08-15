@@ -1,10 +1,11 @@
 'use strict';
 
 function sendError(res, error) {
-    res.status(statusCode).send({
-        error: true,
-        statusCode: error.statusCode || Error.unknownError.statusCode,
-        message: error.message || Error.unknownError.message
+    res.status(error.statusCode).send({
+        error: {
+            statusCode: error.statusCode || Error.unknownError.statusCode,
+            message: error.message || Error.unknownError.message
+        }
     });
 }
 
