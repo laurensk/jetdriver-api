@@ -18,3 +18,5 @@ class Car {
         this.model = model;
     }
 }
+
+module.exports = Car;

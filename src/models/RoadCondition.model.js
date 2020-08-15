@@ -10,3 +10,5 @@ class RoadCondition {
         this.roadCondition = roadCondition;
     }
 }
+
+module.exports = RoadCondition;

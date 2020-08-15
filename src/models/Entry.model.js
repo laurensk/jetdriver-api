@@ -28,3 +28,5 @@ class Entry {
         this.user = user;
     }
 }
+
+module.exports = Entry;

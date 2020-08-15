@@ -12,3 +12,5 @@ class Property {
         this.desc = desc
     }
 }
+
+module.exports = Property;

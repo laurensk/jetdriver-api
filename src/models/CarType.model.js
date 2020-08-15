@@ -10,3 +10,5 @@ class CarType {
         this.type = type;
     }
 }
+
+module.exports = CarType;

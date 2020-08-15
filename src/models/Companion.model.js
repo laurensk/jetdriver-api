@@ -10,3 +10,5 @@ class Companion {
         this.name = name;
     }
 }
+
+module.exports = Companion;
