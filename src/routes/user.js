@@ -16,7 +16,22 @@ router.route('/').get(verifyToken, (req, res) => {
 });
 
 router.route('/login').post((req, res) => {
-    loginUser(req, res);
+
+    const validation = Joi.object({
+        email: Joi.string().min(6).required().email(),
+        password: Joi.string().required()
+    });
+    const { error } = validation.validate(req.body);
+    if (error) return sendError(res, Error.loginFailed);
+
+    if (!validatePassword(req.body.password)) return sendError(res, Error.loginFailed);
+
+    loginUser(req.body.email, req.body.password, (error, user) => {
+        if (error) return sendError(res, error);
+        res.json({
+            user: user
+        });
+    });
 });
 
 router.route('/sign-up').post((req, res) => {
@@ -36,7 +51,6 @@ router.route('/sign-up').post((req, res) => {
             user: user
         });
     });
-
 });
 
 module.exports = router;

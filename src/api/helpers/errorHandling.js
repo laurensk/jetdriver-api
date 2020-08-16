@@ -14,6 +14,7 @@ class Error {
     unknownError = { statusCode: 400, message: "ERROR" }
     validationError = { statusCode: 400, message: "VALIDATION_ERROR" }
     emailExists = { statusCode: 400, message: "EMAIL_EXISTS" }
+    loginFailed = { statusCode: 400, message: "LOGIN_FAILED" }
 }
 
 module.exports = {
