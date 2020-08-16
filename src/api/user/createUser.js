@@ -26,11 +26,8 @@ module.exports = function createUser(email, name, password, callback) {
                     if (err) return callback(Error.unknownError, null);
                     const user = new User(dbUser.useId, dbUser.useEmail, dbUser.useName);
                     callback(null, user, token);
-                })
-            })
+                });
+            });
         });
-
-
-    })
-
+    });
 }
