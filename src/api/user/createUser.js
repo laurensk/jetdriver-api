@@ -1,6 +1,5 @@
 'use strict';
 
-const mysql = require('mysql');
 const sql = require("../../db");
 const { Error, sendError } = require('../helpers/errorHandling');
 const bcrypt = require('bcryptjs');
