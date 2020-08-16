@@ -5,16 +5,15 @@ class User {
         (
             uuid,
             email,
+            name,
             password,
-            salt,
-            token
+            salt
         ) {
         this.uuid = uuid;
         this.email = email;
+        this.name = name;
         this.password = password;
         this.salt = salt;
-        this.token = token;
-
     }
 }
 
