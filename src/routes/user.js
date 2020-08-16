@@ -10,6 +10,7 @@ const createUser = require('../api/user/createUser');
 const validatePassword = require('../api/helpers/validatePassword');
 
 router.route('/').get(verifyToken, (req, res) => {
+
     const uuid = req.body.uuid;
     getUser(uuid, (error, user) => {
         if (error) return sendError(res, error);
