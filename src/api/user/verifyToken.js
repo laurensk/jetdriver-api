@@ -14,12 +14,9 @@ module.exports = function verifyToken(req, res, next) {
     req.token = bearerToken;
 
     sql.query('SELECT tokUseId FROM JDTokens WHERE tokToken = ? AND tokValid = TRUE', [bearerToken], (err, rows) => {
-        console.log(rows);
         if (err) return sendError(res, Error.unknownError);
         if (!rows.length === 1) return sendError(res, Error.unauthenticated);
-
-        const uuid = rows[0].tokUseId;
-        req.body.uuid = uuid;
+        req.body.uuid = rows[0].tokUseId;
         next();
     });
 }
