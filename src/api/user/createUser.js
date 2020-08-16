@@ -15,7 +15,7 @@ module.exports = function createUser(email, name, password, callback) {
         const salt = await bcrypt.genSalt();
         const hashPassword = await bcrypt.hash(password, salt);
 
-        sql.query(`INSERT INTO JDUsers (useId, useEmail, useName, usePassword, useSalt) VALUES (UUID(), ?, ?, ?, ?)`, [email, name, hashPassword, salt], (err) => {
+        sql.query('INSERT INTO JDUsers (useId, useEmail, useName, usePassword, useSalt) VALUES (UUID(), ?, ?, ?, ?)', [email, name, hashPassword, salt], (err) => {
             if (err) return callback(Error.unknownError, null);
             sql.query('SELECT * FROM JDUsers WHERE useEmail = ?', [email], (err, rows) => {
                 if (err) return callback(Error.unknownError, null);
