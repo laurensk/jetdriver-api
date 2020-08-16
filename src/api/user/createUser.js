@@ -18,8 +18,9 @@ module.exports = function createUser(email, name, password, callback) {
         sql.query(`INSERT INTO JDUsers (useId, useEmail, useName, usePassword, useSalt) VALUES (UUID(), ?, ?, ?, ?)`, [email, name, hashPassword, salt], (err) => {
             if (err) return callback(Error.unknownError, null);
             sql.query('SELECT * FROM JDUsers WHERE useEmail = ?', [email], (err, rows) => {
-                const dbUser = rows[0];
+                if (err) return callback(Error.unknownError, null);
 
+                const dbUser = rows[0];
                 const token = jwt.sign({ uuid: dbUser.useId }, process.env.TOKEN_SECRET);
 
                 sql.query('INSERT INTO JDTokens (tokId, tokToken, tokUseId, tokValid) VALUES (UUID(), ?, ?, TRUE)', [token, dbUser.useId], (err) => {
