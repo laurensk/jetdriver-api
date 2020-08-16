@@ -11,6 +11,7 @@ function sendError(res, error) {
 
 class Error {
     unauthenticated = { statusCode: 403, message: "UNAUTHENTICATED" }
+    invalidToken = { statusCode: 400, message: "INVALID_TOKEN" }
     unknownError = { statusCode: 400, message: "ERROR" }
     validationError = { statusCode: 400, message: "VALIDATION_ERROR" }
     emailExists = { statusCode: 400, message: "EMAIL_EXISTS" }
