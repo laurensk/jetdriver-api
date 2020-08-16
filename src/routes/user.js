@@ -10,21 +10,8 @@ const createUser = require('../api/user/createUser');
 const validatePassword = require('../api/helpers/validatePassword');
 
 router.route('/').get(verifyToken, (req, res) => {
-    getUser(req, res);
-});
-
-router.route('/login').post((req, res) => {
-
-    const validation = Joi.object({
-        email: Joi.string().min(6).required().email(),
-        password: Joi.string().required()
-    });
-    const { error } = validation.validate(req.body);
-    if (error) return sendError(res, Error.loginFailed);
-
-    if (!validatePassword(req.body.password)) return sendError(res, Error.loginFailed);
-
-    loginUser(req.body.email, req.body.password, (error, user) => {
+    const uuid = req.body.uuid;
+    getUser(uuid, (error, user) => {
         if (error) return sendError(res, error);
         res.json({
             user: user
@@ -32,7 +19,7 @@ router.route('/login').post((req, res) => {
     });
 });
 
-router.route('/sign-up').post((req, res) => {
+router.route('/login').post((req, res) => {
 
     const validation = Joi.object({
         email: Joi.string().min(6).required().email(),
@@ -43,8 +30,30 @@ router.route('/sign-up').post((req, res) => {
 
     if (!validatePassword(req.body.password)) return sendError(res, Error.validationError);
 
-    createUser(req.body.email, req.body.password, (error, user) => {
+    loginUser(req.body.email, req.body.password, (error, user, token) => {
         if (error) return sendError(res, error);
+        res.header('auth-token', token);
+        res.json({
+            user: user
+        });
+    });
+});
+
+router.route('/sign-up').post((req, res) => {
+
+    const validation = Joi.object({
+        email: Joi.string().min(6).required().email(),
+        name: Joi.string().min(1).required(),
+        password: Joi.string().required()
+    });
+    const { error } = validation.validate(req.body);
+    if (error) return sendError(res, Error.validationError);
+
+    if (!validatePassword(req.body.password)) return sendError(res, Error.validationError);
+
+    createUser(req.body.email, req.body.name, req.body.password, (error, user, token) => {
+        if (error) return sendError(res, error);
+        res.header('auth-token', token);
         res.json({
             user: user
         });
