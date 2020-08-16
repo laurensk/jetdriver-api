@@ -3,9 +3,7 @@
 const Joi = require('@hapi/joi');
 const router = require('express').Router();
 const { sendError, Error } = require('../api/helpers/errorHandling');
-
 const verifyToken = require('../api/user/verifyToken');
-
 const getUser = require('../api/user/getUser');
 const loginUser = require('../api/user/loginUser');
 const createUser = require('../api/user/createUser');
