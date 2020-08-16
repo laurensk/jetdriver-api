@@ -14,11 +14,12 @@ module.exports = function verifyToken(req, res, next) {
     const bearerToken = bearer[1];
     req.token = bearerToken;
 
-    sql.query('SELECT * FROM JDTokens WHERE tokToken = ? AND tokValid = TRUE', [bearerToken], (err, rows) => {
+    sql.query('SELECT tokUseId FROM JDTokens WHERE tokToken = ? AND tokValid = TRUE', [bearerToken], (err, rows) => {
         console.log(rows);
         if (err) return sendError(Error.unknownError);
         if (rows.length === 1) {
-            console.log('User authenticated');
+            const uuid = rows[0].tokUseId;
+            req.body.uuid = uuid;
             next();
         } else {
             sendError(res, Error.unauthenticated);
