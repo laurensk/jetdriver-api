@@ -7,6 +7,8 @@ const app = express();
 const router = require('./router');
 
 app.use(express.json());
+app.disable('x-powered-by');
+
 app.use(router);
 
 app.listen(process.env.PORT || 3000);
