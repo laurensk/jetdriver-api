@@ -1,10 +1,8 @@
 'use strict';
 
 const sql = require("../../db");
-const { Error, sendError } = require('../helpers/errorHandling');
-const bcrypt = require('bcryptjs');
+const { Error } = require('../helpers/errorHandling');
 const User = require('../../models/User.model');
-const jwt = require('jsonwebtoken');
 
 module.exports = function getUser(uuid, callback) {
     sql.query('SELECT useId, useEmail, useName FROM JDUsers WHERE useId = ?', [uuid], (err, rows) => {
