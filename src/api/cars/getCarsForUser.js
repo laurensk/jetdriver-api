@@ -8,7 +8,6 @@ const Car = require('../../models/Car.model');
 module.exports = function getCarsForUser(uuid, callback) {
 
     sql.query('SELECT carId, carTypeId, catType, carNumberPlate, carName, carBrand, carModel FROM JDCars LEFT JOIN JDCarTypes ON JDCars.carTypeId = JDCarTypes.catId WHERE carUseId = ?', [uuid], (err, rows) => {
-        console.log(err);
         if (err) return callback(Error.unknownError, null);
         if (!rows.length >= 1) return callback(Error.unknownError, null);
 
