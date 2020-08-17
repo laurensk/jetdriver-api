@@ -4,6 +4,7 @@ class Car {
     constructor
         (
             uuid,
+            carTypeId,
             carType,
             numberPlate,
             name,
@@ -11,6 +12,7 @@ class Car {
             model
         ) {
         this.uuid = uuid;
+        this.carTypeId = carTypeId;
         this.carType = carType;
         this.numberPlate = numberPlate;
         this.name = name;
