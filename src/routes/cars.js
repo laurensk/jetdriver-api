@@ -3,7 +3,7 @@
 const Joi = require('@hapi/joi');
 const verifyToken = require('../api/user/verifyToken');
 const router = require('express').Router();
-const { sendError } = require('../api/helpers/errorHandling');
+const { sendError, Error } = require('../api/helpers/errorHandling');
 const getCarsForUser = require('../api/cars/getCarsForUser');
 const createCar = require('../api/cars/createCar');
 const getCarWithId = require('../api/cars/getCarWithId');
@@ -21,6 +21,7 @@ router.route('/').get(verifyToken, (req, res) => {
 router.route('/').post(verifyToken, (req, res) => {
 
     const validation = Joi.object({
+        uuid: Joi.string().required(),
         typeId: Joi.number().required(),
         numberPlate: Joi.string().required(),
         name: Joi.string().required(),
