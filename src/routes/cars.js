@@ -7,6 +7,7 @@ const { sendError, Error } = require('../api/helpers/errorHandling');
 const getCarsForUser = require('../api/cars/getCarsForUser');
 const createCar = require('../api/cars/createCar');
 const getCarWithId = require('../api/cars/getCarWithId');
+const deleteCar = require('../api/cars/deleteCar');
 
 router.route('/').get(verifyToken, (req, res) => {
 
@@ -46,6 +47,17 @@ router.route('/:carId').get(verifyToken, (req, res) => {
         if (error) return sendError(res, error);
         res.json({
             car: car
+        });
+    });
+});
+
+router.route('/:carId').delete(verifyToken, (req, res) => {
+
+    const carId = req.params.carId;
+    deleteCar(req.body.uuid, carId, (error, deletion) => {
+        if (error) return sendError(res, error);
+        res.json({
+            delete: deletion
         });
     });
 });
