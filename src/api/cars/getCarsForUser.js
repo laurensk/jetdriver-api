@@ -9,7 +9,7 @@ module.exports = function getCarsForUser(uuid, callback) {
 
     sql.query('SELECT carId, carTypeId, catType, carNumberPlate, carName, carBrand, carModel FROM JDCars LEFT JOIN JDCarTypes ON JDCars.carTypeId = JDCarTypes.catId WHERE carUseId = ?', [uuid], (err, rows) => {
         if (err) return callback(Error.unknownError, null);
-        if (!rows.length >= 1) return callback(Error.unknownError, null);
+        if (!rows.length >= 1) return callback(Error.carNotFound, null);
 
         let cars = [];
         rows.forEach((dbCar) => {
