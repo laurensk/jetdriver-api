@@ -2,7 +2,6 @@
 
 const sql = require("../../db");
 const { Error } = require('../helpers/errorHandling');
-const { v4: uuidv4 } = require('uuid');
 const Car = require('../../models/Car.model');
 
 module.exports = function getCarWithId(uuid, carId, callback) {
