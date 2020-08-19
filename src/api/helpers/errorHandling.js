@@ -27,6 +27,9 @@ class Error {
 
     // Entries
     entryNotFound = { statusCode: 400, message: "ENTRY_NOT_FOUND" }
+
+    // Properties
+    propertyNotAvailable = { statusCode: 400, message: "PROPERTY_NOT_AVAILABLE" }
 }
 
 module.exports = {
