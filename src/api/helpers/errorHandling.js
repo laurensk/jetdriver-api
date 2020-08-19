@@ -21,6 +21,9 @@ class Error {
 
     // Car
     carNotFound = { statusCode: 400, message: "CAR_NOT_FOUND" }
+
+    // Companion
+    companionNotFound = { statusCode: 400, message: "COMPANION_NOT_FOUND" }
 }
 
 module.exports = {
