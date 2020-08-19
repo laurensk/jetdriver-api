@@ -11,4 +11,4 @@ app.disable('x-powered-by');
 
 app.use(router);
 
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.APP_PORT || 3000);
