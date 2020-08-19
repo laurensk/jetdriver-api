@@ -1,14 +1,20 @@
 'use strict';
 
+const Joi = require('@hapi/joi');
 const verifyToken = require('../api/user/verifyToken');
 const router = require('express').Router();
+const { sendError, Error } = require('../api/helpers/errorHandling');
+const getCompanionsForUser = require('../api/companions/getCompanionsForUser');
+const createCompanion = require('../api/companions/createCompanion');
+const getCompanionWithId = require('../api/companions/getCompanionWithId');
+const deleteCompanion = require('../api/companions/deleteCompanion');
 
 router.route('/').get(verifyToken, (req, res) => {
 
-    getCompanionsForUser(req.body.uuid, (error, cars) => {
+    getCompanionsForUser(req.body.uuid, (error, companions) => {
         if (error) return sendError(res, error);
         res.json({
-            cars: cars
+            companions: companions
         });
     });
 });
@@ -22,7 +28,7 @@ router.route('/').post(verifyToken, (req, res) => {
     const { error } = validation.validate(req.body);
     if (error) return sendError(res, Error.validationError);
 
-    createCompanion(req.body.uuid, req.body.name, (error, car) => {
+    createCompanion(req.body.uuid, req.body.name, (error, companion) => {
         if (error) return sendError(res, error);
         res.json({
             companion: companion
@@ -33,7 +39,7 @@ router.route('/').post(verifyToken, (req, res) => {
 router.route('/:comId').get(verifyToken, (req, res) => {
 
     const comId = req.params.comId;
-    getCompanionWithId(req.body.uuid, comId, (error, car) => {
+    getCompanionWithId(req.body.uuid, comId, (error, companion) => {
         if (error) return sendError(res, error);
         res.json({
             companion: companion
