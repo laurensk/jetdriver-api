@@ -9,7 +9,6 @@ class Entry {
             endMileage,
             routeDest,
             notes,
-            daytime,
             car,
             roadCondition,
             companion,
@@ -21,7 +20,6 @@ class Entry {
         this.endMileage = endMileage;
         this.routeDest = routeDest;
         this.notes = notes;
-        this.daytime = daytime;
         this.car = car;
         this.roadCondition = roadCondition;
         this.companion = companion;

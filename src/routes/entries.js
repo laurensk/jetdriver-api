@@ -1,18 +1,68 @@
 'use strict';
 
+const Joi = require('@hapi/joi');
 const verifyToken = require('../api/user/verifyToken');
 const router = require('express').Router();
+const { sendError, Error } = require('../api/helpers/errorHandling');
+const getEntriesForUser = require('../api/entries/getEntriesForUser');
+const createEntry = require('../api/entries/createEntry');
+const getEntryWithId = require('../api/entries/getEntryWithId');
+const deleteEntry = require('../api/entries/deleteEntry');
 
 router.route('/').get(verifyToken, (req, res) => {
-    res.send('entries');
+
+    getEntriesForUser(req.body.uuid, (error, entries) => {
+        if (error) return sendError(res, error);
+        res.json({
+            entries: entries
+        });
+    });
 });
 
 router.route('/').post(verifyToken, (req, res) => {
-    res.send('create entry');
+
+    const validation = Joi.object({
+        uuid: Joi.string().required(),
+        date: Joi.date().required(),
+        startMileage: Joi.number().required(),
+        endMileage: Joi.number().required(),
+        routeDest: Joi.string().required(),
+        notes: Joi.string(),
+        carId: Joi.string().required(),
+        roadConditionId: Joi.string().required(),
+        companionId: Joi.string().required(),
+    });
+    const { error } = validation.validate(req.body);
+    if (error) return sendError(res, Error.validationError);
+
+    createEntry(req.body.uuid, req.body.date, req.body.startMileage, req.body.endMileage, req.body.routeDest, req.body.notes, req.body.carId, req.body.roadConditionId, req.body.companionId, (error, entry) => {
+        if (error) return sendError(res, error);
+        res.json({
+            entry: entry
+        });
+    });
 });
 
-router.route('/:uuid').get(verifyToken, (req, res) => {
-    res.send('will get entry with id ' + req.params.uuid);
+router.route('/:entId').get(verifyToken, (req, res) => {
+
+    const entId = req.params.entId;
+    getEntryWithId(req.body.uuid, entId, (error, entry) => {
+        if (error) return sendError(res, error);
+        res.json({
+            entry: entry
+        });
+    });
+});
+
+router.route('/:entId').delete(verifyToken, (req, res) => {
+
+    const entId = req.params.entId;
+    deleteEntry(req.body.uuid, entId, (error, deletion) => {
+        if (error) return sendError(res, error);
+        res.json({
+            delete: deletion
+        });
+    });
 });
 
 module.exports = router;

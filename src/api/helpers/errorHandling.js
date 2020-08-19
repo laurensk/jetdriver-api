@@ -24,6 +24,9 @@ class Error {
 
     // Companion
     companionNotFound = { statusCode: 400, message: "COMPANION_NOT_FOUND" }
+
+    // Entries
+    entryNotFound = { statusCode: 400, message: "ENTRY_NOT_FOUND" }
 }
 
 module.exports = {
