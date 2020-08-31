@@ -23,7 +23,8 @@ router.route('/').post(verifyToken, (req, res) => {
 
     const validation = Joi.object({
         uuid: Joi.string().required(),
-        date: Joi.date().required(),
+        startDate: Joi.date().required(),
+        endDate: Joi.date().required(),
         startMileage: Joi.number().required(),
         endMileage: Joi.number().required(),
         routeDest: Joi.string().required(),
@@ -35,7 +36,7 @@ router.route('/').post(verifyToken, (req, res) => {
     const { error } = validation.validate(req.body);
     if (error) return sendError(res, Error.validationError);
 
-    createEntry(req.body.uuid, req.body.date, req.body.startMileage, req.body.endMileage, req.body.routeDest, req.body.notes, req.body.carId, req.body.roadConditionId, req.body.companionId, (error, entry) => {
+    createEntry(req.body.uuid, req.body.startDate, req.body.endDate, req.body.startMileage, req.body.endMileage, req.body.routeDest, req.body.notes, req.body.carId, req.body.roadConditionId, req.body.companionId, (error, entry) => {
         if (error) return sendError(res, error);
         res.json({
             entry: entry

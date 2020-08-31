@@ -19,7 +19,7 @@ module.exports = function getEntryWithId(uuid, entId, callback) {
             const car = new Car(dbEntry.carId, dbEntry.carTypeId, dbEntry.carNumberPlate, dbEntry.carName, dbEntry.carBrand, dbEntry.carModel);
             const roadCondition = new RoadCondition(dbEntry.roaId, dbEntry.roaRoadCondition);
             const companion = new Companion(dbEntry.comId, dbEntry.comName);
-            const entry = new Entry(dbEntry.entId, dbEntry.entDate, dbEntry.entStartMileage, dbEntry.entEndMileage, dbEntry.entRouteDest, dbEntry.entNotes, car, roadCondition, companion);
+            const entry = new Entry(dbEntry.entId, dbEntry.entStartDate, dbEntry.endEndDate, dbEntry.entStartMileage, dbEntry.entEndMileage, dbEntry.entRouteDest, dbEntry.entNotes, car, roadCondition, companion);
 
             callback(null, entry);
         });

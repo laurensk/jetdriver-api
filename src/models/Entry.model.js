@@ -4,7 +4,8 @@ class Entry {
     constructor
         (
             uuid,
-            date,
+            startDate,
+            endDate,
             startMileage,
             endMileage,
             routeDest,
@@ -15,7 +16,8 @@ class Entry {
             user
         ) {
         this.uuid = uuid;
-        this.date = date;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.startMileage = startMileage;
         this.endMileage = endMileage;
         this.routeDest = routeDest;
