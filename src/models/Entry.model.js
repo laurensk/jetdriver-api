@@ -12,6 +12,7 @@ class Entry {
             notes,
             car,
             roadCondition,
+            daytimeId,
             companion,
             user
         ) {
@@ -24,6 +25,7 @@ class Entry {
         this.notes = notes;
         this.car = car;
         this.roadCondition = roadCondition;
+        this.daytimeId = daytimeId;
         this.companion = companion;
         this.user = user;
     }

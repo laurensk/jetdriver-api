@@ -30,13 +30,14 @@ router.route('/').post(verifyToken, (req, res) => {
         routeDest: Joi.string().required(),
         notes: Joi.string(),
         carId: Joi.string().required(),
-        roadConditionId: Joi.string().required(),
+        roadConditionId: Joi.number().required(),
+        daytimeId: Joi.number().required(),
         companionId: Joi.string().required(),
     });
     const { error } = validation.validate(req.body);
     if (error) return sendError(res, Error.validationError);
 
-    createEntry(req.body.uuid, req.body.startDate, req.body.endDate, req.body.startMileage, req.body.endMileage, req.body.routeDest, req.body.notes, req.body.carId, req.body.roadConditionId, req.body.companionId, (error, entry) => {
+    createEntry(req.body.uuid, req.body.startDate, req.body.endDate, req.body.startMileage, req.body.endMileage, req.body.routeDest, req.body.notes, req.body.carId, req.body.roadConditionId, req.body.daytimeId, req.body.companionId, (error, entry) => {
         if (error) return sendError(res, error);
         res.json({
             entry: entry
