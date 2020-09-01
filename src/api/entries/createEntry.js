@@ -13,11 +13,11 @@ module.exports = function createEntry(uuid, startDate, endDate, startMileage, en
 
     const entId = uuidv4();
 
-    sql.query('INSERT INTO JDEntries (entId, entStartDate, entEndDate, entStartMileage, entEndMileage, entRouteDest, entNotes, entCarId, entRoaId, entDaytimeId, entComId, entUseId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    sql.query('INSERT INTO JDEntries (entId, entStartDate, entEndDate, entStartMileage, entEndMileage, entRouteDest, entNotes, entCarId, entRoaId, entDaytimeId, entComId, entUseId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
         [entId, startDate, endDate, startMileage, endMileage, routeDest, notes, carId, roadConditionId, daytimeId, companionId, uuid], (err) => {
             if (err) return callback(Error.unknownError, null);
 
-            sql.query('SELECT * FROM JDEntries LEFT JOIN JDCars ON JDEntries.entCarId = JDCars.carId LEFT JOIN JDRoadCondition ON JDEntries.entRoaId = JDRoadCondition.roaId LEFT JOIN JDCompanions ON JDEntries.entComId = JDCompanions.comId LEFT JOIN JDDaytimes ON JDEntries.entDaytimeId = JDDaytimes.dayId WHERE entId = ?', [entId], (err, rows) => {
+            sql.query('SELECT * FROM JDEntries LEFT JOIN JDCars ON JDEntries.entCarId = JDCars.carId LEFT JOIN JDRoadConditions ON JDEntries.entRoaId = JDRoadConditions.roaId LEFT JOIN JDCompanions ON JDEntries.entComId = JDCompanions.comId LEFT JOIN JDDaytimes ON JDEntries.entDaytimeId = JDDaytimes.dayId WHERE entId = ?', [entId], (err, rows) => {
                 if (err) return callback(Error.unknownError, null);
                 if (!rows.length == 1) return callback(Error.unknownError, null);
 

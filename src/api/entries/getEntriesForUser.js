@@ -6,10 +6,11 @@ const Car = require('../../models/Car.model');
 const RoadCondition = require('../../models/RoadCondition.model');
 const Companion = require('../../models/Companion.model');
 const Entry = require('../../models/Entry.model');
+const Daytime = require('../../models/Daytime.model');
 
 module.exports = function getEntriesForUser(uuid, callback) {
 
-    sql.query('SELECT * FROM JDEntries LEFT JOIN JDCars ON JDEntries.entCarId = JDCars.carId LEFT JOIN JDRoadCondition ON JDEntries.entRoaId = JDRoadCondition.roaId LEFT JOIN JDCompanions ON JDEntries.entComId = JDCompanions.comId LEFT JOIN JDDaytimes ON JDEntries.entDaytimeId = JDDaytimes.dayId WHERE entUseId = ?', [uuid], (err, rows) => {
+    sql.query('SELECT * FROM JDEntries LEFT JOIN JDCars ON JDEntries.entCarId = JDCars.carId LEFT JOIN JDRoadConditions ON JDEntries.entRoaId = JDRoadConditions.roaId LEFT JOIN JDCompanions ON JDEntries.entComId = JDCompanions.comId LEFT JOIN JDDaytimes ON JDEntries.entDaytimeId = JDDaytimes.dayId WHERE entUseId = ?', [uuid], (err, rows) => {
         if (err) return callback(Error.unknownError, null);
         if (!rows.length >= 1) return callback(Error.entryNotFound, null);
 

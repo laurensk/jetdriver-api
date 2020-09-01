@@ -28,7 +28,7 @@ router.route('/').post(verifyToken, (req, res) => {
         startMileage: Joi.number().required(),
         endMileage: Joi.number().required(),
         routeDest: Joi.string().required(),
-        notes: Joi.string(),
+        notes: Joi.string().allow(null, ''),
         carId: Joi.string().required(),
         roadConditionId: Joi.number().required(),
         daytimeId: Joi.number().required(),
