@@ -23,8 +23,8 @@ router.route('/').post(verifyToken, (req, res) => {
 
     const validation = Joi.object({
         uuid: Joi.string().required(),
-        startDate: Joi.date().required(),
-        endDate: Joi.date().required(),
+        startDate: Joi.number().required(),
+        endDate: Joi.number().required(),
         startMileage: Joi.number().required(),
         endMileage: Joi.number().required(),
         routeDest: Joi.string().required(),
