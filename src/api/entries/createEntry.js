@@ -13,23 +13,33 @@ module.exports = function createEntry(uuid, startDate, endDate, startMileage, en
 
     const entId = uuidv4();
 
-    sql.query('INSERT INTO JDEntries (entId, entStartDate, entEndDate, entStartMileage, entEndMileage, entRouteDest, entNotes, entCarId, entRoaId, entDaytimeId, entComId, entUseId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-        [entId, startDate, endDate, startMileage, endMileage, routeDest, notes, carId, roadConditionId, daytimeId, companionId, uuid], (err) => {
+    sql.query('SELECT carId from JDCars WHERE carId = ? AND carUseId = ?', [carId, uuid], (err, rows) => {
+        if (err) return callback(Error.unknownError, null);
+        if (!rows.length == 1) return callback(Error.unknownError, null);
+
+        sql.query('SELECT comId from JDCompanions WHERE comId = ? AND comUseId = ?', [companionId, uuid], (err, rows) => {
             if (err) return callback(Error.unknownError, null);
+            if (!rows.length == 1) return callback(Error.unknownError, null);
 
-            sql.query('SELECT * FROM JDEntries LEFT JOIN JDCars ON JDEntries.entCarId = JDCars.carId LEFT JOIN JDRoadConditions ON JDEntries.entRoaId = JDRoadConditions.roaId LEFT JOIN JDCompanions ON JDEntries.entComId = JDCompanions.comId LEFT JOIN JDDaytimes ON JDEntries.entDaytimeId = JDDaytimes.dayId WHERE entId = ?', [entId], (err, rows) => {
-                if (err) return callback(Error.unknownError, null);
-                if (!rows.length == 1) return callback(Error.unknownError, null);
+            sql.query('INSERT INTO JDEntries (entId, entStartDate, entEndDate, entStartMileage, entEndMileage, entRouteDest, entNotes, entCarId, entRoaId, entDaytimeId, entComId, entUseId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                [entId, startDate, endDate, startMileage, endMileage, routeDest, notes, carId, roadConditionId, daytimeId, companionId, uuid], (err) => {
+                    if (err) return callback(Error.unknownError, null);
 
-                const dbEntry = rows[0];
+                    sql.query('SELECT * FROM JDEntries LEFT JOIN JDCars ON JDEntries.entCarId = JDCars.carId LEFT JOIN JDRoadConditions ON JDEntries.entRoaId = JDRoadConditions.roaId LEFT JOIN JDCompanions ON JDEntries.entComId = JDCompanions.comId LEFT JOIN JDDaytimes ON JDEntries.entDaytimeId = JDDaytimes.dayId WHERE entId = ?', [entId], (err, rows) => {
+                        if (err) return callback(Error.unknownError, null);
+                        if (!rows.length == 1) return callback(Error.unknownError, null);
 
-                const car = new Car(dbEntry.carId, dbEntry.carTypeId, dbEntry.carNumberPlate, dbEntry.carName, dbEntry.carBrand, dbEntry.carModel);
-                const roadCondition = new RoadCondition(dbEntry.roaId, dbEntry.roaRoadCondition);
-                const daytime = new Daytime(dbEntry.dayId, dbEntry.dayDaytime);
-                const companion = new Companion(dbEntry.comId, dbEntry.comName);
-                const entry = new Entry(dbEntry.entId, dbEntry.entStartDate, dbEntry.entEndDate, dbEntry.entStartMileage, dbEntry.entEndMileage, dbEntry.entRouteDest, dbEntry.entNotes, car, roadCondition, daytime, companion);
+                        const dbEntry = rows[0];
 
-                callback(null, entry);
-            });
-        });
+                        const car = new Car(dbEntry.carId, dbEntry.carTypeId, dbEntry.carNumberPlate, dbEntry.carName, dbEntry.carBrand, dbEntry.carModel);
+                        const roadCondition = new RoadCondition(dbEntry.roaId, dbEntry.roaRoadCondition);
+                        const daytime = new Daytime(dbEntry.dayId, dbEntry.dayDaytime);
+                        const companion = new Companion(dbEntry.comId, dbEntry.comName);
+                        const entry = new Entry(dbEntry.entId, dbEntry.entStartDate, dbEntry.entEndDate, dbEntry.entStartMileage, dbEntry.entEndMileage, dbEntry.entRouteDest, dbEntry.entNotes, car, roadCondition, daytime, companion);
+
+                        callback(null, entry);
+                    });
+                });
+        })
+    })
 }
