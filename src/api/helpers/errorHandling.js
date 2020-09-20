@@ -21,9 +21,11 @@ class Error {
 
     // Car
     carNotFound = { statusCode: 400, message: "CAR_NOT_FOUND" }
+    carDependency = { statusCode: 400, message: "CAR_DEPENDENCY" }
 
     // Companion
     companionNotFound = { statusCode: 400, message: "COMPANION_NOT_FOUND" }
+    companionDependency = { statusCode: 400, message: "COMPANION_DEPENDENCY" }
 
     // Entries
     entryNotFound = { statusCode: 400, message: "ENTRY_NOT_FOUND" }

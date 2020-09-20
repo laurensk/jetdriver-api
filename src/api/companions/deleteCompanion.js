@@ -9,10 +9,15 @@ module.exports = function deleteCompanion(uuid, comId, callback) {
         if (err) return callback(Error.unknownError, null);
         if (!rows.length == 1) return callback(Error.companionNotFound, null);
 
-        sql.query('DELETE FROM JDCompanions WHERE comUseId = ? AND comId = ?', [uuid, comId], (err) => {
+        sql.query('SELECT entComId FROM JDEntries WHERE entComId = ?', [comId], (err, rows) => {
             if (err) return callback(Error.unknownError, null);
-            callback(null, {
-                success: true
+            if (!rows.length == 0) return callback(Error.companionDependency, null);
+
+            sql.query('DELETE FROM JDCompanions WHERE comUseId = ? AND comId = ?', [uuid, comId], (err) => {
+                if (err) return callback(Error.unknownError, null);
+                callback(null, {
+                    success: true
+                });
             });
         });
     });

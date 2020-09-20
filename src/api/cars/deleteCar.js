@@ -9,10 +9,15 @@ module.exports = function deleteCar(uuid, carId, callback) {
         if (err) return callback(Error.unknownError, null);
         if (!rows.length == 1) return callback(Error.carNotFound, null);
 
-        sql.query('DELETE FROM JDCars WHERE carUseId = ? AND carId = ?', [uuid, carId], (err) => {
+        sql.query('SELECT entCarId FROM JDEntries WHERE entCarId = ?', [carId], (err, rows) => {
             if (err) return callback(Error.unknownError, null);
-            callback(null, {
-                success: true
+            if (!rows.length == 0) return callback(Error.carDependency, null);
+
+            sql.query('DELETE FROM JDCars WHERE carUseId = ? AND carId = ?', [uuid, carId], (err) => {
+                if (err) return callback(Error.unknownError, null);
+                callback(null, {
+                    success: true
+                });
             });
         });
     });
